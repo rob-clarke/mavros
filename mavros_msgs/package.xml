@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
   <name>mavros_msgs</name>
-  <version>1.5.2</version>
+  <version>2.0.0</version>
   <description>
     mavros_msgs defines messages for <a href="http://wiki.ros.org/mavros">MAVROS</a>.
   </description>
@@ -16,10 +16,10 @@
   <url type="repository">https://github.com/mavlink/mavros.git</url>
   <url type="bugtracker">https://github.com/mavlink/mavros/issues</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
 
-  <build_depend>message_generation</build_depend>
-  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
   <depend>std_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>sensor_msgs</depend>
@@ -27,6 +27,8 @@
   <!-- XXX needed for users of mavlink_convert.h
   <build_export_depend>libmavconn</build_export_depend>
   -->
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>
     <architecture_independent/>

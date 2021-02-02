@@ -1,124 +1,46 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(mavros_msgs)
 
-find_package(catkin REQUIRED COMPONENTS geographic_msgs geometry_msgs message_generation sensor_msgs std_msgs)
+find_package(ament_cmake REQUIRED)
 
-include_directories(include)
+find_package(builtin_interfaces REQUIRED)
+find_package(geographic_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 
-add_message_files(
-  DIRECTORY msg
-  FILES
-  ADSBVehicle.msg
-  ActuatorControl.msg
-  Altitude.msg
-  AttitudeTarget.msg
-  BatteryStatus.msg
-  CamIMUStamp.msg
-  CommandCode.msg
-  CompanionProcessStatus.msg
-  OnboardComputerStatus.msg
-  DebugValue.msg
-  ESCInfo.msg
-  ESCInfoItem.msg
-  ESCStatus.msg
-  ESCStatusItem.msg
-  EstimatorStatus.msg
-  ExtendedState.msg
-  FileEntry.msg
-  GlobalPositionTarget.msg
-  GPSRAW.msg
-  GPSRTK.msg
-  HilActuatorControls.msg
-  HilControls.msg
-  HilGPS.msg
-  HilSensor.msg
-  HilStateQuaternion.msg
-  HomePosition.msg
-  LandingTarget.msg
-  LogData.msg
-  LogEntry.msg
-  ManualControl.msg
-  Mavlink.msg
-  MountControl.msg
-  OpticalFlowRad.msg
-  OverrideRCIn.msg
-  Param.msg
-  ParamValue.msg
-  PlayTuneV2.msg
-  PositionTarget.msg
-  RCIn.msg
-  RCOut.msg
-  RTCM.msg
-  RadioStatus.msg
-  RTKBaseline.msg
-  State.msg
-  StatusText.msg
-  Thrust.msg
-  TimesyncStatus.msg
-  Trajectory.msg
-  VFR_HUD.msg
-  VehicleInfo.msg
-  Vibration.msg
-  Waypoint.msg
-  WaypointList.msg
-  WaypointReached.msg
-  WheelOdomStamped.msg
+find_package(rosidl_default_generators REQUIRED)
+
+# Generate msg and srv file lists
+file(GLOB msg_files
+  RELATIVE ${CMAKE_CURRENT_LIST_DIR}
+  msg/*.msg
+)
+file(GLOB srv_files
+  RELATIVE ${CMAKE_CURRENT_LIST_DIR}
+  srv/*.srv
 )
 
-add_service_files(
-  DIRECTORY srv
-  FILES
-  CommandBool.srv
-  CommandHome.srv
-  CommandInt.srv
-  CommandLong.srv
-  CommandTOL.srv
-  CommandTriggerControl.srv
-  CommandTriggerInterval.srv
-  CommandVtolTransition.srv
-  FileChecksum.srv
-  FileClose.srv
-  FileList.srv
-  FileMakeDir.srv
-  FileOpen.srv
-  FileRead.srv
-  FileRemove.srv
-  FileRemoveDir.srv
-  FileRename.srv
-  FileTruncate.srv
-  FileWrite.srv
-  LogRequestData.srv
-  LogRequestEnd.srv
-  LogRequestList.srv
-  MountConfigure.srv
-  MessageInterval.srv
-  ParamGet.srv
-  ParamPull.srv
-  ParamPush.srv
-  ParamSet.srv
-  SetMavFrame.srv
-  SetMode.srv
-  StreamRate.srv
-  VehicleInfoGet.srv
-  WaypointClear.srv
-  WaypointPull.srv
-  WaypointPush.srv
-  WaypointSetCurrent.srv
+rosidl_generate_interfaces(${PROJECT_NAME}
+  ${msg_files}
+  ${srv_files}
+  DEPENDENCIES geographic_msgs geometry_msgs sensor_msgs std_msgs
 )
 
-# add_action_files(
-#   DIRECTORY action
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+ament_export_dependencies(
+  geographic_msgs
+  geometry_msgs
+  sensor_msgs
+  std_msgs
+)
 
-generate_messages(DEPENDENCIES geographic_msgs geometry_msgs sensor_msgs std_msgs)
-
-catkin_package(
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS geographic_msgs geometry_msgs message_runtime sensor_msgs std_msgs)
+ament_export_include_directories(
+  include
+)
 
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h")
+  DESTINATION include/${PROJECT_NAME}
+  FILES_MATCHING PATTERN "*.h"
+)
+
+ament_package()

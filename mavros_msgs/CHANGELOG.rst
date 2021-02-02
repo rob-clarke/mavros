@@ -2,6 +2,14 @@
 Changelog for package mavros_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.0 (2021-02-02)
+------------------
+* Update for ROS2
+* Message VFR_HUD renamed to VFRHUD for ROS2 naming
+* Field ICAO_address renamed to icao_address for ROS2 naming
+* time and duration replaced by ROS2 builtin_interface equivalents
+* Contributors: Rob Clarke
+
 1.5.2 (2021-02-02)
 ------------------
 
